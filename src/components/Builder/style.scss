@@ -1,0 +1,69 @@
+.builder {
+    display: flex;
+}
+
+#builder-area, .sidebar-wrap {
+    min-height: 800px;
+}
+
+#builder-area {
+    width: 70%;
+    position: relative;
+}
+
+.drag {
+    position: absolute;
+    z-index: 1000;
+}
+
+#sidebar {
+    width: 30%;
+    padding: 0 15px;
+}
+
+.sidebar-wrap {
+    background: #fff;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 15px;
+}
+
+#sidebar div, #sidebar h1, #sidebar ul, #sidebar button{
+    margin: 0 0 15px 0;
+    cursor: move;
+}
+
+.sidebar-wrap div, .sidebar-wrap button, .sidebar-wrap ul, .sidebar-wrap h1 {
+    background: blue;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#sidebar .drag-el {
+    position: absolute;
+    z-index: 1000;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    top: 0;
+}
+
+.sidebar-wrap .el-wrap {
+    background: none;
+    border: 2px dashed blue;
+}
+
+.drooped {
+    box-shadow: 0 0 5px 4px #000000c9;
+}
+
+.builder-container h1,  .builder-container div, .builder-container ul, .builder-container button {
+    border: 2px dashed red;
+    position: absolute;
+    z-index: 1000;
+    cursor: move;
+}

@@ -1,0 +1,15 @@
+#header {
+    background: green;
+    ul {
+        display: flex;
+        li {
+            a {
+                padding: 10px 15px;
+                display: block;
+                color: #fff;
+                text-transform: uppercase;
+                font-size: 26px;
+            }
+        }
+    }
+}
