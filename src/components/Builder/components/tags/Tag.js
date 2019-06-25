@@ -10,7 +10,7 @@ function Tag({ tag, mouseDragDown, mouseDragUp, active, showNavActiveElement, id
     const mouseDown = e => mouseDragDown(e, tag);
     const { width, height, x, y, id, name, text } = tag;
     const renderActive = () => (active && (active.type === tag.type) ? <div style={{ maxWidth: `${width}px`, width: '100%', height: `${height}px` }} className="el-wrap" /> : '');
-     
+
     const renderTag = (WrappedComponent) => {
         const style = { maxWidth: `${width}px`, width: '100%', height: `${height}px` };
 
@@ -63,6 +63,8 @@ Tag.propTypes = {
 
 Tag.defaultProps = {
     showNavActiveElement: () => null,
+    mouseDragDown: () => null,
+    mouseDragUp: () => null,
 };
 
 export default Tag;
