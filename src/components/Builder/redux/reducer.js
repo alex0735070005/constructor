@@ -11,9 +11,10 @@ import {
     CLEAR_ID_ACTIVE_ELEMENT,
     SET_ID_ACTIVE_ELEMENT,
     UPDATE_ACTIVE_ELEMENT,
+    SORT_ELEMENTS,
 } from './actions';
 
-const initialState = {
+export const initialState = {
     tags: dataTags,
     getElementById: {},
     elementIds: [],
@@ -25,6 +26,26 @@ const initialState = {
     builderAreaY: 0,
     rows: 0,
     columns: 0,
+};
+
+const sortElementsByCords = (elementIds, getElementById) => {
+    const ids = [...elementIds];
+
+    ids.sort((a, b) => {
+        if (getElementById[a].x < getElementById[b].x) {
+            return -1;
+        }
+        return 1;
+    });
+
+    ids.sort((a, b) => {
+        if (getElementById[a].y < getElementById[b].y) {
+            return -1;
+        }
+        return 1;
+    });
+
+    return ids;
 };
 
 export default function (state = initialState, action) {
@@ -100,6 +121,13 @@ export default function (state = initialState, action) {
                 ...state,
                 builderAreaX: action.builderAreaX,
                 builderAreaY: action.builderAreaY,
+            };
+        }
+
+        case SORT_ELEMENTS: {
+            return {
+                ...state,
+                elementIds: sortElementsByCords(state.elementIds, state.getElementById),
             };
         }
         default: return state;

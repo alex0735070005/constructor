@@ -6,9 +6,11 @@ export const SET_COLUMNS = 'SET_COLUMNS';
 export const SET_BUILDER_AREA_CORDS = 'SET_BUILDER_AREA_CORDS';
 export const SET_ID_ACTIVE_ELEMENT = 'SET_ID_ACTIVE_ELEMENT';
 export const UPDATE_ACTIVE_ELEMENT = 'UPDATE_ACTIVE_ELEMENT';
+export const SORT_ELEMENTS = 'SORT_ELEMENTS';
 export const CLEAR_ID_ACTIVE_ELEMENT = 'CLEAR_ID_ACTIVE_ELEMENT';
 
 export const clearActiveAction = () => ({ type: CLEAR_ACTIVE });
+export const sortElementsAction = () => ({ type: SORT_ELEMENTS });
 export const setActiveAction = active => ({ type: SET_ACTIVE, active });
 export const clearIdActiveElementAction = () => ({ type: CLEAR_ID_ACTIVE_ELEMENT });
 export const setIdActiveElementAction = idActiveElement => ({ type: SET_ID_ACTIVE_ELEMENT, idActiveElement });

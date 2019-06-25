@@ -45,7 +45,6 @@ function Builder({
         const x = target.offsetLeft;
         const y = target.offsetTop;
         setBuilderAreaCords(x, y);
-        console.log('******************RENDER BUILDER EFFECT*************************');
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -95,7 +94,6 @@ function Builder({
         setActiveNode(null);
         clearActive();
     };
-    console.log('******************RENDER BUILDER*************************');
     return (
         <div className="builder" onMouseMove={mouseDragMove}>
             <Sidebar
@@ -135,8 +133,8 @@ Builder.propTypes = {
     setRows: PropTypes.func.isRequired,
     setActive: PropTypes.func.isRequired,
     clearActive: PropTypes.func.isRequired,
-    builderAreaX: PropTypes.number.isRequired,
-    builderAreaY: PropTypes.number.isRequired,
+    builderAreaX: PropTypes.number,
+    builderAreaY: PropTypes.number,
     idActiveElement: PropTypes.string.isRequired,
 };
 
