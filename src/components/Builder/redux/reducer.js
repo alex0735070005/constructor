@@ -8,14 +8,19 @@ import {
     CLEAR_ACTIVE,
     ADD_ELEMENT,
     SET_BUILDER_AREA_CORDS,
+    CLEAR_ID_ACTIVE_ELEMENT,
+    SET_ID_ACTIVE_ELEMENT,
+    UPDATE_ACTIVE_ELEMENT,
 } from './actions';
 
 const initialState = {
     tags: dataTags,
-    elements: [],
+    getElementById: {},
+    elementIds: [],
     active: {},
-    cellHeight: 25,
-    cellWidth: 25,
+    idActiveElement: '',
+    cellHeight: 24,
+    cellWidth: 24,
     builderAreaX: 0,
     builderAreaY: 0,
     rows: 0,
@@ -38,6 +43,29 @@ export default function (state = initialState, action) {
             };
         }
 
+        case ADD_ELEMENT: {
+            const newElement = { ...action.element, id: uuid() };
+            return {
+                ...state,
+                getElementById: { ...state.getElementById, [newElement.id]: newElement },
+                elementIds: [...state.elementIds, newElement.id],
+                idActiveElement: newElement.id,
+            };
+        }
+
+        case UPDATE_ACTIVE_ELEMENT: {
+            return {
+                ...state,
+                getElementById: {
+                    ...state.getElementById,
+                    [state.idActiveElement]: {
+                        ...state.getElementById[state.idActiveElement],
+                        ...action.element,
+                    },
+                },
+            };
+        }
+
         case SET_ACTIVE: {
             return {
                 ...state,
@@ -45,17 +73,25 @@ export default function (state = initialState, action) {
             };
         }
 
-        case ADD_ELEMENT: {
-            return {
-                ...state,
-                elements: [...state.elements, { ...action.element, id: uuid() }],
-            };
-        }
 
         case CLEAR_ACTIVE: {
             return {
                 ...state,
                 active: {},
+            };
+        }
+
+        case CLEAR_ID_ACTIVE_ELEMENT: {
+            return {
+                ...state,
+                idActiveElement: '',
+            };
+        }
+
+        case SET_ID_ACTIVE_ELEMENT: {
+            return {
+                ...state,
+                idActiveElement: action.idActiveElement,
             };
         }
 

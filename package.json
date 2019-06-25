@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "lodash.debounce": "^4.0.8",
+    "lodash.throttle": "^4.1.1",
     "react": "^16.8.6",
     "react-beautiful-dnd": "^11.0.4",
     "react-dnd": "^8.0.2",

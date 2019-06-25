@@ -60,10 +60,3 @@
 .drooped {
     box-shadow: 0 0 5px 4px #000000c9;
 }
-
-.builder-container h1,  .builder-container div, .builder-container ul, .builder-container button {
-    border: 2px dashed red;
-    position: absolute;
-    z-index: 1000;
-    cursor: move;
-}

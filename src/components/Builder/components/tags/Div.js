@@ -1,24 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Div({ tag, mouseUp, mouseDown, renderActive }) {
-    const { width, height, x, y } = tag;
-
-    const style = { maxWidth: `${width}px`, width: '100%', height: `${height}px` };
-
-    if (x && y) {
-        style.top = `${y}px`;
-        style.left = `${x}px`;
-    }
-
+function Div({ mouseUp, mouseDown, renderActive, style, showActive, name, className }) {
     return (
         <>
             <div
+                onClick={showActive}
                 onMouseUp={mouseUp}
                 onMouseDown={mouseDown}
                 style={style}
+                className={className}
             >
-                {tag.name}
+                {name}
             </div>
             {renderActive()}
         </>
@@ -26,10 +19,13 @@ function Div({ tag, mouseUp, mouseDown, renderActive }) {
 }
 
 Div.propTypes = {
-    tag: PropTypes.object.isRequired,
     mouseUp: PropTypes.func.isRequired,
     mouseDown: PropTypes.func.isRequired,
     renderActive: PropTypes.func.isRequired,
+    style: PropTypes.object.isRequired,
+    showActive: PropTypes.func,
+    name: PropTypes.string.isRequired,
+    className: PropTypes.string.isRequired,
 };
 
 export default Div;

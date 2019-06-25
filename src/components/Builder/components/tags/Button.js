@@ -1,25 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Button({ tag, mouseUp, mouseDown, renderActive }) {
-    const { width, height, x, y } = tag;
-
-    const style = { maxWidth: `${width}px`, width: '100%', height: `${height}px` };
-
-    if (x && y) {
-        style.top = `${y}px`;
-        style.left = `${x}px`;
-    }
-
+function Button({ mouseUp, mouseDown, renderActive, style, showNavActiveElement, name, className }) {
     return (
         <>
             <button
+                onClick={showNavActiveElement}
                 type="button"
                 onMouseUp={mouseUp}
                 onMouseDown={mouseDown}
                 style={style}
+                className={className}
             >
-                {tag.name}
+                {name}
             </button>
             {renderActive()}
         </>
@@ -27,10 +20,13 @@ function Button({ tag, mouseUp, mouseDown, renderActive }) {
 }
 
 Button.propTypes = {
-    tag: PropTypes.object.isRequired,
     mouseUp: PropTypes.func.isRequired,
     mouseDown: PropTypes.func.isRequired,
     renderActive: PropTypes.func.isRequired,
+    style: PropTypes.object.isRequired,
+    showNavActiveElement: PropTypes.func,
+    name: PropTypes.string.isRequired,
+    className: PropTypes.string.isRequired,
 };
 
 export default Button;
