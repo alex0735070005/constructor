@@ -4,9 +4,10 @@ export default [
     { name: 'Paragraph', type: 'p', width: 300, height: 50, text: 'your paragraf' },
     {
         name: 'List',
+        text: '',
         type: 'ul',
         width: 300,
-        height: 100,
+        height: 150,
         children: [
             { text: 'item-1' },
             { text: 'item-2' },

@@ -1,84 +1,54 @@
-import React, { useState, useRef } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import Tag from '../tags/Tag';
+import { connect } from 'react-redux';
+import List from './components/List';
+import {
+    updateElementAction,
+    clearIdActiveElementAction,
+    setIdActiveElementAction,
+} from '../../redux/actions';
+
 import './style.scss';
 
-function Layout({
-    elements,
-    active,
-    setActive,
-    clearActive,
-    builderAreaX,
-    builderAreaY,
+function Loyout({
+    elementIds,
+    getElementById,
+    setIdActiveElement,
+    idActiveElement,
 }) {
-    const [activeNode, setActiveNode] = useState(null);
-
-    const builderContainer = useRef(null);
-
-    const mouseDragMove = (e) => {
-        if (activeNode) {
-            const x = e.pageX - activeNode.clientWidth / 2;
-            const y = e.pageY - activeNode.clientHeight / 2;
-            const isBuilderAreaX = x > builderAreaX;
-            const isBuilderAreaY = y > builderAreaY;
-            activeNode.style.top = `${y}px`;
-            activeNode.style.left = `${x}px`;
-
-            if (isBuilderAreaX && isBuilderAreaY) {
-                activeNode.className = 'drag drooped';
-            } else {
-                activeNode.className = 'drag';
-            }
-        }
-    };
-
-    const mouseDragDown = (e, data) => {
-        e.preventDefault();
-        const target = e.target;
-        const x = e.pageX - target.clientWidth / 2;
-        const y = e.pageY - target.clientHeight / 2;
-        e.target.className = 'drag';
-        target.style.top = `${y}px`;
-        target.style.left = `${x}px`;
-        setActiveNode(target);
-        setActive(data);
-    };
-
-    const mouseDragUp = (e, data) => {
-        const x = e.pageX - activeNode.clientWidth / 2;
-        const y = e.pageY - activeNode.clientHeight / 2;
-        const isBuilderAreaX = x > builderAreaX;
-        const isBuilderAreaY = y > builderAreaY;
-
-        if (isBuilderAreaX && isBuilderAreaY) {
-            console.log('hi');
-        }
-
-        activeNode.className = '';
-        setActiveNode(null);
-        clearActive();
+    const showNavActiveElement = (id) => {
+        setIdActiveElement(id);
     };
 
     return (
-        <div ref={builderContainer} className="builder-container">
-            {elements.map(e => (<Tag
-                mouseDragUp={mouseDragUp}
-                mouseDragMove={mouseDragMove}
-                mouseDragDown={mouseDragDown}
-                key={e.id} tag={e}
-            />
-            ))}
-        </div>
+        <List
+            elementIds={elementIds}
+            getElementById={getElementById}
+            showNavActiveElement={showNavActiveElement}
+            idActiveElement={idActiveElement}
+        />
     );
 }
 
-Layout.propTypes = {
-    elements: PropTypes.arrayOf(PropTypes.object),
-    active: PropTypes.object,
-    setActive: PropTypes.func.isRequired,
-    clearActive: PropTypes.func.isRequired,
-    builderAreaX: PropTypes.number.isRequired,
-    builderAreaY: PropTypes.number.isRequired,
+Loyout.propTypes = {
+    getElementById: PropTypes.object.isRequired,
+    idActiveElement: PropTypes.string,
+    setIdActiveElement: PropTypes.func.isRequired,
+    elementIds: PropTypes.arrayOf(PropTypes.string),
 };
 
-export default Layout;
+const mapStateToProps = state => ({
+    getElementById: state.builder.getElementById,
+    elementIds: state.builder.elementIds,
+    idActiveElement: state.builder.idActiveElement,
+    builderAreaX: state.builder.builderAreaX,
+    builderAreaY: state.builder.builderAreaY,
+});
+
+const mapDispathToProps = {
+    updateElement: updateElementAction,
+    clearIdActiveElement: clearIdActiveElementAction,
+    setIdActiveElement: setIdActiveElementAction,
+};
+
+export default connect(mapStateToProps, mapDispathToProps)(Loyout);

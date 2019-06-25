@@ -1,7 +1,28 @@
-.builder-container p, .builder-container div, .builder-container h1, .builder-container ul, .builder-container button {
+.builder-container p, .builder-container div, .builder-container h1, .builder-container button {
     margin: 0;
     padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
+    border: 2px dashed red;
+    position: absolute;
+    z-index: 1000;
+}
+
+.builder-container ul {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    border: 2px dashed red;
+    position: absolute;
+    z-index: 1000;
+}
+
+.builder-container ul li {
+    margin: 6px 10px;
+    font-size: 18px;
+}
+
+.loyout-active {
+    box-shadow: 0 0 4px 3px #00000073;
 }

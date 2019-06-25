@@ -15,13 +15,13 @@ function Grid({
     useEffect(() => {
         const clientHeight = gridContainer.current.clientHeight;
         const clientWidth = gridContainer.current.clientWidth;
-
-        const rowsNums = clientHeight / cellHeight;
-        const columnsNums = clientWidth / cellWidth;
+        const rowsNums = Math.floor(clientHeight / cellHeight);
+        const columnsNums = Math.floor(clientWidth / cellWidth);
 
         setColumns(columnsNums);
         setRows(rowsNums);
-    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const lengthBloks = rows * columns;
 

@@ -8,10 +8,15 @@ import {
     setColumnsAction,
     setRowsAction,
     setBuilderAreaCordsAction,
+    setIdActiveElementAction,
+    clearIdActiveElementAction,
+    updateElementAction,
 } from './redux/actions';
 import Sidebar from './components/Sidebar';
 import Grid from './components/Grid';
 import Layout from './components/Layout';
+import Navigate from './components/Navigate';
+
 import './style.scss';
 
 function Builder({
@@ -24,12 +29,12 @@ function Builder({
     active,
     clearActive,
     addElement,
-    elements,
     setBuilderAreaCords,
     setActive,
     tags,
     builderAreaX,
     builderAreaY,
+    idActiveElement,
 }) {
     const [activeNode, setActiveNode] = useState(null);
 
@@ -40,7 +45,9 @@ function Builder({
         const x = target.offsetLeft;
         const y = target.offsetTop;
         setBuilderAreaCords(x, y);
-    });
+        console.log('******************RENDER BUILDER EFFECT*************************');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const mouseDragMove = (e) => {
         if (activeNode) {
@@ -88,7 +95,7 @@ function Builder({
         setActiveNode(null);
         clearActive();
     };
-
+    console.log('******************RENDER BUILDER*************************');
     return (
         <div className="builder" onMouseMove={mouseDragMove}>
             <Sidebar
@@ -106,14 +113,10 @@ function Builder({
                     setRows={setRows}
                     setColumns={setColumns}
                 />
-                <Layout
-                    setActive={setActive}
-                    elements={elements}
-                    clearActive={clearActive}
-                    active={active}
-                    builderAreaX={builderAreaX}
-                    builderAreaY={builderAreaY}
-                />
+
+                <Layout />
+
+                {idActiveElement && <Navigate />}
             </div>
         </div>
     );
@@ -125,7 +128,6 @@ Builder.propTypes = {
     rows: PropTypes.number.isRequired,
     active: PropTypes.object,
     tags: PropTypes.arrayOf(PropTypes.object),
-    elements: PropTypes.arrayOf(PropTypes.object),
     columns: PropTypes.number.isRequired,
     setColumns: PropTypes.func.isRequired,
     addElement: PropTypes.func.isRequired,
@@ -135,6 +137,7 @@ Builder.propTypes = {
     clearActive: PropTypes.func.isRequired,
     builderAreaX: PropTypes.number.isRequired,
     builderAreaY: PropTypes.number.isRequired,
+    idActiveElement: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -143,10 +146,10 @@ const mapStateToProps = state => ({
     rows: state.builder.rows,
     tags: state.builder.tags,
     columns: state.builder.columns,
-    elements: state.builder.elements,
     active: state.builder.active,
     builderAreaX: state.builder.builderAreaX,
     builderAreaY: state.builder.builderAreaY,
+    idActiveElement: state.builder.idActiveElement,
 });
 
 const mapDispathToProps = {
@@ -155,7 +158,10 @@ const mapDispathToProps = {
     setActive: setActiveAction,
     addElement: addElementAction,
     clearActive: clearActiveAction,
+    setIdActiveElement: setIdActiveElementAction,
+    clearIdActiveElement: clearIdActiveElementAction,
     setBuilderAreaCords: setBuilderAreaCordsAction,
+    updateElement: updateElementAction,
 };
 
 export default connect(mapStateToProps, mapDispathToProps)(Builder);
