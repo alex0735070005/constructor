@@ -1,39 +1,37 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import './style.scss';
 
 function Grid({
     cellWidth,
     cellHeight,
-    rows,
-    columns,
-    setColumns,
-    setRows,
 }) {
-    const gridContainer = React.createRef();
+    const gridContainer = useRef();
+    const gridCanvas = useRef();
+
+    const setGrid = (ctx, clientWidth, clientHeight) => {
+        for (let y = 0; y <= clientHeight; y += cellHeight) {
+            for (let x = 0; x <= clientWidth; x += cellWidth) {
+                ctx.strokeRect(x, y, cellWidth, cellHeight);
+            }
+        }
+    };
 
     useEffect(() => {
         const clientHeight = gridContainer.current.clientHeight;
         const clientWidth = gridContainer.current.clientWidth;
-        const rowsNums = Math.floor(clientHeight / cellHeight);
-        const columnsNums = Math.floor(clientWidth / cellWidth);
+        gridCanvas.current.width = clientWidth;
+        gridCanvas.current.height = clientHeight;
+        const ctx = gridCanvas.current.getContext('2d');
+        ctx.strokeStyle = '#ccc';
+        setGrid(ctx, clientWidth, clientHeight);
 
-        setColumns(columnsNums);
-        setRows(rowsNums);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    const lengthBloks = rows * columns;
-
-    const gridBloks = [];
-
-    for (let i = 0; i < lengthBloks; i++) {
-        gridBloks.push(<div style={{ width: cellWidth, height: cellHeight }} key={i} />);
-    }
 
     return (
         <div ref={gridContainer} className="builder-grid">
-            {gridBloks}
+            <canvas ref={gridCanvas} />
         </div>
     );
 }
@@ -41,10 +39,6 @@ function Grid({
 Grid.propTypes = {
     cellWidth: PropTypes.number.isRequired,
     cellHeight: PropTypes.number.isRequired,
-    rows: PropTypes.number.isRequired,
-    columns: PropTypes.number.isRequired,
-    setColumns: PropTypes.func.isRequired,
-    setRows: PropTypes.func.isRequired,
 };
 
 export default Grid;
